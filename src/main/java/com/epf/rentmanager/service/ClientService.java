@@ -27,7 +27,7 @@ public class ClientService {
 	
 	public long create(Client client) throws ServiceException, DaoException {
 		// TODO: créer un client
-		if(client.nom().isEmpty()){
+		if(client.nom().isEmpty() || client.prenom().isEmpty()){
 			throw new ServiceException();
 		}else{
 
@@ -44,7 +44,7 @@ public class ClientService {
 	public Client findById(long id) throws ServiceException,DaoException {
 		// TODO: récupérer un client par son id
 		Client client = ClientDao.getInstance().findById(id);
-		if(client.nom().isEmpty()){
+		if(client.nom().isEmpty() || client.prenom().isEmpty()){
 			throw new ServiceException();
 		}
 		else {return client;}

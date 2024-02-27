@@ -36,10 +36,10 @@ public class ClientDao {
 			   PreparedStatement stmt =
 					   connection.prepareStatement(CREATE_CLIENT_QUERY,
 							   Statement.RETURN_GENERATED_KEYS);) {
-			stmt.setString(1, client.getNom());
-			stmt.setString(2, client.getPrenom());
-			stmt.setString(3, client.getEmail());
-			stmt.setDate(1,Date.valueOf(client.getNaissance()));
+			stmt.setString(1, client.nom());
+			stmt.setString(2, client.prenom());
+			stmt.setString(3, client.email());
+			stmt.setDate(1,Date.valueOf(client.naissance()));
 
 			stmt.execute();
 
@@ -61,7 +61,7 @@ public class ClientDao {
 			 PreparedStatement stmt =
 					 connection.prepareStatement(DELETE_CLIENT_QUERY,
 							 Statement.RETURN_GENERATED_KEYS);) {
-			stmt.setInt(1,client.getId());
+			stmt.setInt(1,client.id());
 
 			stmt.execute();
 
