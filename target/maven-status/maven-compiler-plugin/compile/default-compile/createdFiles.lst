@@ -1,5 +1,7 @@
 com\epf\rentmanager\exceptions\DaoException.class
 com\epf\rentmanager\model\Reservation.class
+com\epf\rentmanager\ui\cli\cli.class
+com\epf\rentmanager\service\ReservationService.class
 com\epf\rentmanager\service\VehicleService.class
 com\epf\rentmanager\persistence\ConnectionManager.class
 com\epf\rentmanager\dao\ReservationDao.class

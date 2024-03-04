@@ -45,7 +45,6 @@ public class VehicleService {
 	}
 
 	public List<Vehicle> findAll() throws ServiceException,DaoException {
-		// TODO: récupérer tous les vehicls
 		return VehicleDao.getInstance().findAll();
 	}
 	

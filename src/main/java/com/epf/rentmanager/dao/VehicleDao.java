@@ -21,10 +21,12 @@ public class VehicleDao {
 		return instance;
 	}
 
-	private static final String CREATE_VEHICLE_QUERY = "INSERT INTO Vehicle(constructeur, modele, nb_places) VALUES(?, ?);";
+	private static final String CREATE_VEHICLE_QUERY = "INSERT INTO Vehicle(constructeur, modele, nb_places) VALUES(?, ?,?);";
 	private static final String DELETE_VEHICLE_QUERY = "DELETE FROM Vehicle WHERE id=?;";
 	private static final String FIND_VEHICLE_QUERY = "SELECT id, constructeur, modele, nb_places FROM Vehicle WHERE id=?;";
 	private static final String FIND_VEHICLES_QUERY = "SELECT id, constructeur, modele, nb_places FROM Vehicle;";
+
+	private static final String COUNT_VEHICLES_QUERY = "SELECT COUNT(id) FROM Vehicle;";
 
 	public long create(Vehicle vehicle) throws DaoException {
 		try(   Connection connection = ConnectionManager.getConnection();
@@ -33,7 +35,7 @@ public class VehicleDao {
 							   Statement.RETURN_GENERATED_KEYS);) {
 			stmt.setString(1, vehicle.constructeur());
 			stmt.setString(2, vehicle.modele());
-			stmt.setInt(1, vehicle.nb_places());
+			stmt.setInt(3, vehicle.nb_places());
 
 
 			stmt.execute();
@@ -105,9 +107,9 @@ public class VehicleDao {
 
 			while(resultSet.next()){
 				int id = resultSet.getInt(1);
-				String constructeur = resultSet.getString(1);
-				String modele = resultSet.getString(2);
-				int nb_places = resultSet.getInt(2);
+				String constructeur = resultSet.getString(2);
+				String modele = resultSet.getString(3);
+				int nb_places = resultSet.getInt(4);
 
 				listeVehicles.add(new Vehicle(id,constructeur,modele,nb_places));
 			}
@@ -116,6 +118,21 @@ public class VehicleDao {
 			throw new RuntimeException(e);
 		}
 	}
-	
+	public int count() throws DaoException{
+		try(Connection connection = ConnectionManager.getConnection();
+			PreparedStatement stmt =
+					connection.prepareStatement(COUNT_VEHICLES_QUERY)){
+			ResultSet resultset = stmt.executeQuery();
+			if (resultset.next()) {
+				return resultset.getInt(1);
+			}
+			else {
+				throw new DaoException();
+			}
+		}catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+
+	}
 
 }

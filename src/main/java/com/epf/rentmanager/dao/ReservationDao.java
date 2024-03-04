@@ -31,16 +31,18 @@ public class ReservationDao {
 	private static final String FIND_RESERVATIONS_BY_CLIENT_QUERY = "SELECT id, vehicle_id, debut, fin FROM Reservation WHERE client_id=?;";
 	private static final String FIND_RESERVATIONS_BY_VEHICLE_QUERY = "SELECT id, client_id, debut, fin FROM Reservation WHERE vehicle_id=?;";
 	private static final String FIND_RESERVATIONS_QUERY = "SELECT id, client_id, vehicle_id, debut, fin FROM Reservation;";
-		
+
+	private static final String COUNT_RESERVATIONS_QUERY = "SELECT Count(id) FROM Reservation;";
+
 	public long create(Reservation reservation) throws DaoException {
 		try(   Connection connection = ConnectionManager.getConnection();
 			   PreparedStatement stmt =
 					   connection.prepareStatement(CREATE_RESERVATION_QUERY,
 							   Statement.RETURN_GENERATED_KEYS);) {
 			stmt.setInt(1, reservation.client_id());
-			stmt.setInt(2, reservation.vehicule_id());
-			stmt.setDate(1,Date.valueOf(reservation.debut()));
-			stmt.setDate(2,Date.valueOf(reservation.fin()));
+			stmt.setInt(2, reservation.vehicle_id());
+			stmt.setDate(3,Date.valueOf(reservation.debut()));
+			stmt.setDate(4,Date.valueOf(reservation.fin()));
 
 			stmt.execute();
 
@@ -83,15 +85,15 @@ public class ReservationDao {
 		try (Connection connection = ConnectionManager.getConnection();
 			 PreparedStatement stmt =
 					 connection.prepareStatement(FIND_RESERVATIONS_BY_CLIENT_QUERY);) {
-
+			stmt.setInt(1,(int)clientId);
 			ResultSet resultSet = stmt.executeQuery();
 			List<Reservation> listeResa = new ArrayList<>();
 
 			while(resultSet.next()){
 				int id = resultSet.getInt(1);
 				int vehicle_id = resultSet.getInt(2);
-				LocalDate debut = resultSet.getDate(1).toLocalDate();
-				LocalDate fin = resultSet.getDate(2).toLocalDate();
+				LocalDate debut = resultSet.getDate(3).toLocalDate();
+				LocalDate fin = resultSet.getDate(4).toLocalDate();
 
 				listeResa.add(new Reservation(id,(int) clientId,vehicle_id,debut,fin));
 			}
@@ -105,15 +107,15 @@ public class ReservationDao {
 		try (Connection connection = ConnectionManager.getConnection();
 			 PreparedStatement stmt =
 					 connection.prepareStatement(FIND_RESERVATIONS_BY_VEHICLE_QUERY);) {
-
+			stmt.setInt(1,(int)vehicleId);
 			ResultSet resultSet = stmt.executeQuery();
 			List<Reservation> listeResa = new ArrayList<>();
 
 			while(resultSet.next()){
 				int id = resultSet.getInt(1);
 				int client_id = resultSet.getInt(2);
-				LocalDate debut = resultSet.getDate(1).toLocalDate();
-				LocalDate fin = resultSet.getDate(2).toLocalDate();
+				LocalDate debut = resultSet.getDate(3).toLocalDate();
+				LocalDate fin = resultSet.getDate(4).toLocalDate();
 
 				listeResa.add(new Reservation(id,client_id,(int) vehicleId,debut,fin));
 			}
@@ -135,8 +137,8 @@ public class ReservationDao {
 				int id = resultSet.getInt(1);
 				int client_id = resultSet.getInt(2);
 				int vehicle_id = resultSet.getInt(3);
-				LocalDate debut = resultSet.getDate(1).toLocalDate();
-				LocalDate fin = resultSet.getDate(2).toLocalDate();
+				LocalDate debut = resultSet.getDate(4).toLocalDate();
+				LocalDate fin = resultSet.getDate(5).toLocalDate();
 
 				listeResa.add(new Reservation(id,client_id,vehicle_id,debut,fin));
 			}
@@ -144,5 +146,21 @@ public class ReservationDao {
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}
+	}
+	public int count() throws DaoException{
+		try(Connection connection = ConnectionManager.getConnection();
+			PreparedStatement stmt =
+					connection.prepareStatement(COUNT_RESERVATIONS_QUERY)){
+			ResultSet resultset = stmt.executeQuery();
+			if (resultset.next()) {
+				return resultset.getInt(1);
+			}
+			else {
+				throw new DaoException();
+			}
+		}catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+
 	}
 }
