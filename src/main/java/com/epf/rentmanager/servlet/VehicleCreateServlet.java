@@ -27,5 +27,7 @@ public class VehicleCreateServlet extends HttpServlet {
         } catch(Exception ex){
             throw new ServletException(ex);
         }
+        resp.sendRedirect(req.getContextPath() + "/cars");
+
     }
 }

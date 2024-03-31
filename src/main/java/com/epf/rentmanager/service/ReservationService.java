@@ -9,11 +9,11 @@ import com.epf.rentmanager.model.Reservation;
 import com.epf.rentmanager.exceptions.ServiceException;
 public class ReservationService {
 
-    private ReservationDao ReservationDao;
+    private ReservationDao reservationDao;
     public static ReservationService instance;
 
     private ReservationService() {
-        this.ReservationDao = ReservationDao.getInstance();
+        this.reservationDao = ReservationDao.getInstance();
     }
 
     public static ReservationService getInstance() {
@@ -26,7 +26,7 @@ public class ReservationService {
 
 
     public long create(Reservation Reservation) throws ServiceException, DaoException {
-            return ReservationDao.create(new Reservation(
+            return ReservationDao.getInstance().create(new Reservation(
                     Reservation.id(),
                     Reservation.client_id(),
                     Reservation.vehicle_id(),

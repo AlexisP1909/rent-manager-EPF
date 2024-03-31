@@ -84,9 +84,9 @@ public class VehicleDao {
 
 			ResultSet resultSet = stmt.executeQuery();
 			if (resultSet.next()){
-				String constructeur = resultSet.getString(1);
-				String modele = resultSet.getString(2);
-				int nb_places = resultSet.getInt(2);
+				String constructeur = resultSet.getString(2);
+				String modele = resultSet.getString(3);
+				int nb_places = resultSet.getInt(4);
 				return new Vehicle((int) id, constructeur, modele, nb_places);
 			}
 			else{

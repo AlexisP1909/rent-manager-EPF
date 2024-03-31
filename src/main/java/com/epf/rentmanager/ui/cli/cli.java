@@ -29,7 +29,9 @@ public class cli {
     public void Init() {
         boolean finish = true;
         UtilLoop:
+        try{
         while (finish) {
+            Thread.sleep(2000); // 20 secondes = 20 000 millisecondes
             IOUtils.print("---------------Bienvenue dans le CLI-------------");
             IOUtils.print("Taper 1 pour Créer un Client");
             IOUtils.print("Taper 2 pour Lister les Clients existants");
@@ -61,6 +63,10 @@ public class cli {
             catch (ServiceException exception){
                 System.out.println("Il y a eu un problème avec l'entrée des données");
             }
+        }
+    }catch (InterruptedException e){
+            System.out.println("Il y a eu un problème avec le Thread");
+            Thread.currentThread().interrupt();
         }
     }
     private void createClient() throws ServiceException,DaoException{
