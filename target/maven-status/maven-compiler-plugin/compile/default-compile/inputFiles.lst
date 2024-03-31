@@ -2,11 +2,13 @@ C:\Users\alexi\Documents\EPF_S8\COURS JAVA\TP4JAVA\rentmanager\src\main\java\com
 C:\Users\alexi\Documents\EPF_S8\COURS JAVA\TP4JAVA\rentmanager\src\main\java\com\epf\rentmanager\persistence\ConnectionManager.java
 C:\Users\alexi\Documents\EPF_S8\COURS JAVA\TP4JAVA\rentmanager\src\main\java\com\epf\rentmanager\service\VehicleService.java
 C:\Users\alexi\Documents\EPF_S8\COURS JAVA\TP4JAVA\rentmanager\src\main\java\com\epf\rentmanager\persistence\FillDatabase.java
+C:\Users\alexi\Documents\EPF_S8\COURS JAVA\TP4JAVA\rentmanager\src\main\java\com\epf\rentmanager\servlet\UserDetailsServlet.java
 C:\Users\alexi\Documents\EPF_S8\COURS JAVA\TP4JAVA\rentmanager\src\main\java\com\epf\rentmanager\dao\ClientDao.java
 C:\Users\alexi\Documents\EPF_S8\COURS JAVA\TP4JAVA\rentmanager\src\main\java\com\epf\rentmanager\exceptions\ServiceException.java
 C:\Users\alexi\Documents\EPF_S8\COURS JAVA\TP4JAVA\rentmanager\src\main\java\com\epf\rentmanager\exceptions\DaoException.java
 C:\Users\alexi\Documents\EPF_S8\COURS JAVA\TP4JAVA\rentmanager\src\main\java\com\epf\rentmanager\servlet\HomeServlet.java
 C:\Users\alexi\Documents\EPF_S8\COURS JAVA\TP4JAVA\rentmanager\src\main\java\com\epf\rentmanager\model\Client.java
+C:\Users\alexi\Documents\EPF_S8\COURS JAVA\TP4JAVA\rentmanager\src\main\java\com\epf\rentmanager\servlet\UserCreateServlet.java
 C:\Users\alexi\Documents\EPF_S8\COURS JAVA\TP4JAVA\rentmanager\src\main\java\com\epf\rentmanager\ui\cli\cli.java
 C:\Users\alexi\Documents\EPF_S8\COURS JAVA\TP4JAVA\rentmanager\src\main\java\com\epf\rentmanager\servlet\UserListServlet.java
 C:\Users\alexi\Documents\EPF_S8\COURS JAVA\TP4JAVA\rentmanager\src\main\java\com\epf\rentmanager\dao\VehicleDao.java
