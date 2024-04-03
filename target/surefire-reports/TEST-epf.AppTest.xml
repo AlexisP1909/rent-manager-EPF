@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="epf.AppTest" time="0.03" tests="1" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="epf.AppTest" time="0.035" tests="1" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.specification.version" value="22"/>
     <property name="sun.cpu.isalist" value="amd64"/>
     <property name="sun.jnu.encoding" value="Cp1252"/>
-    <property name="java.class.path" value="C:\Users\alexi\Documents\COURS JAVA\TP4JAVA\rentmanager\target\test-classes;C:\Users\alexi\Documents\COURS JAVA\TP4JAVA\rentmanager\target\classes;C:\Users\alexi\.m2\repository\junit\junit\4.11\junit-4.11.jar;C:\Users\alexi\.m2\repository\org\hamcrest\hamcrest-core\1.3\hamcrest-core-1.3.jar;C:\Users\alexi\.m2\repository\com\h2database\h2\1.4.200\h2-1.4.200.jar;C:\Users\alexi\.m2\repository\javax\servlet\javax.servlet-api\4.0.1\javax.servlet-api-4.0.1.jar;C:\Users\alexi\.m2\repository\javax\annotation\javax.annotation-api\1.3.2\javax.annotation-api-1.3.2.jar;C:\Users\alexi\.m2\repository\javax\servlet\jstl\1.2\jstl-1.2.jar;C:\Users\alexi\.m2\repository\org\springframework\spring-context\6.1.4\spring-context-6.1.4.jar;C:\Users\alexi\.m2\repository\org\springframework\spring-aop\6.1.4\spring-aop-6.1.4.jar;C:\Users\alexi\.m2\repository\org\springframework\spring-beans\6.1.4\spring-beans-6.1.4.jar;C:\Users\alexi\.m2\repository\org\springframework\spring-core\6.1.4\spring-core-6.1.4.jar;C:\Users\alexi\.m2\repository\org\springframework\spring-jcl\6.1.4\spring-jcl-6.1.4.jar;C:\Users\alexi\.m2\repository\org\springframework\spring-expression\6.1.4\spring-expression-6.1.4.jar;C:\Users\alexi\.m2\repository\io\micrometer\micrometer-observation\1.12.3\micrometer-observation-1.12.3.jar;C:\Users\alexi\.m2\repository\io\micrometer\micrometer-commons\1.12.3\micrometer-commons-1.12.3.jar;"/>
+    <property name="java.class.path" value="C:\Users\alexi\Documents\EPF_S8\COURS JAVA\TP4JAVA\rentmanager\target\test-classes;C:\Users\alexi\Documents\EPF_S8\COURS JAVA\TP4JAVA\rentmanager\target\classes;C:\Users\alexi\.m2\repository\junit\junit\4.11\junit-4.11.jar;C:\Users\alexi\.m2\repository\org\hamcrest\hamcrest-core\1.3\hamcrest-core-1.3.jar;C:\Users\alexi\.m2\repository\com\h2database\h2\1.4.200\h2-1.4.200.jar;C:\Users\alexi\.m2\repository\javax\servlet\javax.servlet-api\4.0.1\javax.servlet-api-4.0.1.jar;C:\Users\alexi\.m2\repository\javax\annotation\javax.annotation-api\1.3.2\javax.annotation-api-1.3.2.jar;C:\Users\alexi\.m2\repository\javax\servlet\jstl\1.2\jstl-1.2.jar;C:\Users\alexi\.m2\repository\org\springframework\spring-context\6.1.4\spring-context-6.1.4.jar;C:\Users\alexi\.m2\repository\org\springframework\spring-aop\6.1.4\spring-aop-6.1.4.jar;C:\Users\alexi\.m2\repository\org\springframework\spring-beans\6.1.4\spring-beans-6.1.4.jar;C:\Users\alexi\.m2\repository\org\springframework\spring-core\6.1.4\spring-core-6.1.4.jar;C:\Users\alexi\.m2\repository\org\springframework\spring-jcl\6.1.4\spring-jcl-6.1.4.jar;C:\Users\alexi\.m2\repository\org\springframework\spring-expression\6.1.4\spring-expression-6.1.4.jar;C:\Users\alexi\.m2\repository\io\micrometer\micrometer-observation\1.12.3\micrometer-observation-1.12.3.jar;C:\Users\alexi\.m2\repository\io\micrometer\micrometer-commons\1.12.3\micrometer-commons-1.12.3.jar;C:\Users\alexi\.m2\repository\org\springframework\spring-webmvc\5.1.6.RELEASE\spring-webmvc-5.1.6.RELEASE.jar;C:\Users\alexi\.m2\repository\org\springframework\spring-web\5.1.6.RELEASE\spring-web-5.1.6.RELEASE.jar;"/>
     <property name="java.vm.vendor" value="Oracle Corporation"/>
     <property name="sun.arch.data.model" value="64"/>
     <property name="user.variant" value=""/>
@@ -15,9 +15,9 @@
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="user.country" value="FR"/>
     <property name="sun.boot.library.path" value="C:\Users\alexi\.jdks\openjdk-22\bin"/>
-    <property name="sun.java.command" value="C:\Users\alexi\AppData\Local\Temp\surefire13879712245419874123\surefirebooter2962103907707005589.jar C:\Users\alexi\AppData\Local\Temp\surefire13879712245419874123 2024-03-30T15-20-15_259-jvmRun1 surefire7983477470411781131tmp surefire_011995797117421149003tmp"/>
+    <property name="sun.java.command" value="C:\Users\alexi\AppData\Local\Temp\surefire14798825059613558286\surefirebooter11470156822974170920.jar C:\Users\alexi\AppData\Local\Temp\surefire14798825059613558286 2024-04-01T10-41-58_743-jvmRun1 surefire2721622220077051366tmp surefire_01237943019614103684tmp"/>
     <property name="jdk.debug" value="release"/>
-    <property name="surefire.test.class.path" value="C:\Users\alexi\Documents\COURS JAVA\TP4JAVA\rentmanager\target\test-classes;C:\Users\alexi\Documents\COURS JAVA\TP4JAVA\rentmanager\target\classes;C:\Users\alexi\.m2\repository\junit\junit\4.11\junit-4.11.jar;C:\Users\alexi\.m2\repository\org\hamcrest\hamcrest-core\1.3\hamcrest-core-1.3.jar;C:\Users\alexi\.m2\repository\com\h2database\h2\1.4.200\h2-1.4.200.jar;C:\Users\alexi\.m2\repository\javax\servlet\javax.servlet-api\4.0.1\javax.servlet-api-4.0.1.jar;C:\Users\alexi\.m2\repository\javax\annotation\javax.annotation-api\1.3.2\javax.annotation-api-1.3.2.jar;C:\Users\alexi\.m2\repository\javax\servlet\jstl\1.2\jstl-1.2.jar;C:\Users\alexi\.m2\repository\org\springframework\spring-context\6.1.4\spring-context-6.1.4.jar;C:\Users\alexi\.m2\repository\org\springframework\spring-aop\6.1.4\spring-aop-6.1.4.jar;C:\Users\alexi\.m2\repository\org\springframework\spring-beans\6.1.4\spring-beans-6.1.4.jar;C:\Users\alexi\.m2\repository\org\springframework\spring-core\6.1.4\spring-core-6.1.4.jar;C:\Users\alexi\.m2\repository\org\springframework\spring-jcl\6.1.4\spring-jcl-6.1.4.jar;C:\Users\alexi\.m2\repository\org\springframework\spring-expression\6.1.4\spring-expression-6.1.4.jar;C:\Users\alexi\.m2\repository\io\micrometer\micrometer-observation\1.12.3\micrometer-observation-1.12.3.jar;C:\Users\alexi\.m2\repository\io\micrometer\micrometer-commons\1.12.3\micrometer-commons-1.12.3.jar;"/>
+    <property name="surefire.test.class.path" value="C:\Users\alexi\Documents\EPF_S8\COURS JAVA\TP4JAVA\rentmanager\target\test-classes;C:\Users\alexi\Documents\EPF_S8\COURS JAVA\TP4JAVA\rentmanager\target\classes;C:\Users\alexi\.m2\repository\junit\junit\4.11\junit-4.11.jar;C:\Users\alexi\.m2\repository\org\hamcrest\hamcrest-core\1.3\hamcrest-core-1.3.jar;C:\Users\alexi\.m2\repository\com\h2database\h2\1.4.200\h2-1.4.200.jar;C:\Users\alexi\.m2\repository\javax\servlet\javax.servlet-api\4.0.1\javax.servlet-api-4.0.1.jar;C:\Users\alexi\.m2\repository\javax\annotation\javax.annotation-api\1.3.2\javax.annotation-api-1.3.2.jar;C:\Users\alexi\.m2\repository\javax\servlet\jstl\1.2\jstl-1.2.jar;C:\Users\alexi\.m2\repository\org\springframework\spring-context\6.1.4\spring-context-6.1.4.jar;C:\Users\alexi\.m2\repository\org\springframework\spring-aop\6.1.4\spring-aop-6.1.4.jar;C:\Users\alexi\.m2\repository\org\springframework\spring-beans\6.1.4\spring-beans-6.1.4.jar;C:\Users\alexi\.m2\repository\org\springframework\spring-core\6.1.4\spring-core-6.1.4.jar;C:\Users\alexi\.m2\repository\org\springframework\spring-jcl\6.1.4\spring-jcl-6.1.4.jar;C:\Users\alexi\.m2\repository\org\springframework\spring-expression\6.1.4\spring-expression-6.1.4.jar;C:\Users\alexi\.m2\repository\io\micrometer\micrometer-observation\1.12.3\micrometer-observation-1.12.3.jar;C:\Users\alexi\.m2\repository\io\micrometer\micrometer-commons\1.12.3\micrometer-commons-1.12.3.jar;C:\Users\alexi\.m2\repository\org\springframework\spring-webmvc\5.1.6.RELEASE\spring-webmvc-5.1.6.RELEASE.jar;C:\Users\alexi\.m2\repository\org\springframework\spring-web\5.1.6.RELEASE\spring-web-5.1.6.RELEASE.jar;"/>
     <property name="sun.cpu.endian" value="little"/>
     <property name="user.home" value="C:\Users\alexi"/>
     <property name="user.language" value="fr"/>
@@ -25,12 +25,12 @@
     <property name="java.version.date" value="2024-03-19"/>
     <property name="java.home" value="C:\Users\alexi\.jdks\openjdk-22"/>
     <property name="file.separator" value="\"/>
-    <property name="basedir" value="C:\Users\alexi\Documents\COURS JAVA\TP4JAVA\rentmanager"/>
+    <property name="basedir" value="C:\Users\alexi\Documents\EPF_S8\COURS JAVA\TP4JAVA\rentmanager"/>
     <property name="java.vm.compressedOopsMode" value="Zero based"/>
     <property name="line.separator" value="&#10;"/>
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
-    <property name="surefire.real.class.path" value="C:\Users\alexi\AppData\Local\Temp\surefire13879712245419874123\surefirebooter2962103907707005589.jar"/>
+    <property name="surefire.real.class.path" value="C:\Users\alexi\AppData\Local\Temp\surefire14798825059613558286\surefirebooter11470156822974170920.jar"/>
     <property name="user.script" value=""/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
     <property name="java.runtime.version" value="22+36-2370"/>
@@ -46,7 +46,7 @@
     <property name="java.io.tmpdir" value="C:\Users\alexi\AppData\Local\Temp\"/>
     <property name="idea.version" value="2023.3.6"/>
     <property name="java.version" value="22"/>
-    <property name="user.dir" value="C:\Users\alexi\Documents\COURS JAVA\TP4JAVA\rentmanager"/>
+    <property name="user.dir" value="C:\Users\alexi\Documents\EPF_S8\COURS JAVA\TP4JAVA\rentmanager"/>
     <property name="os.arch" value="amd64"/>
     <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
     <property name="sun.os.patch.level" value=""/>
@@ -59,5 +59,5 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="java.class.version" value="66.0"/>
   </properties>
-  <testcase name="shouldAnswerWithTrue" classname="epf.AppTest" time="0.003"/>
+  <testcase name="shouldAnswerWithTrue" classname="epf.AppTest" time="0.004"/>
 </testsuite>

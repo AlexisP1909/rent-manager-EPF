@@ -1,4 +1,5 @@
 package com.epf.rentmanager.ui.cli;
+import com.epf.rentmanager.configuration.AppConfiguration;
 import com.epf.rentmanager.dao.VehicleDao;
 import com.epf.rentmanager.exceptions.DaoException;
 import com.epf.rentmanager.exceptions.ServiceException;
@@ -10,6 +11,8 @@ import com.epf.rentmanager.model.Client;
 import com.epf.rentmanager.model.Vehicle;
 import com.epf.rentmanager.model.Reservation;
 import com.epf.rentmanager.service.ReservationService;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import java.time.LocalDate;
 
@@ -22,7 +25,11 @@ public class cli {
         }
         return instance;
     }
-
+    ApplicationContext context = new
+            AnnotationConfigApplicationContext(AppConfiguration.class);
+    ClientService clientService = context.getBean(ClientService.class);
+    VehicleService vehicleService = context.getBean(VehicleService.class);
+    ReservationService reservationService = context.getBean(ReservationService.class);
     public static void main(String[] args) {
         cli.getInstance().Init();
     }
@@ -75,14 +82,14 @@ public class cli {
         String prenom = IOUtils.readString("Entrez le Prenom du client", true);
         String email = IOUtils.readString("Entrez l'Email du client", false);
         LocalDate naissance = IOUtils.readDate("Entrez la date de naissance du client", false);
-        ClientService.getInstance().create(new Client(1, nom, prenom, email, naissance));
+        clientService.create(new Client(1, nom, prenom, email, naissance));
     }
     private void createVehicle() throws ServiceException,DaoException{
         IOUtils.print("Nous allons entrer les informations pour créer le Vehicle");
         String constructeur = IOUtils.readString("Entrez le constructeur", true);
         String modele = IOUtils.readString("Entrez le modele", true);
         int nb_places = IOUtils.readInt("Entrez le nb de places du véhicule");
-        VehicleService.getInstance().create(new Vehicle(1, constructeur, modele, nb_places));
+        vehicleService.create(new Vehicle(1, constructeur, modele, nb_places));
     }
     private void createReservation() throws ServiceException,DaoException{
         IOUtils.print("Nous allons entrer les informations pour créer la Réservation");
@@ -90,34 +97,34 @@ public class cli {
         int IdClient = IOUtils.readInt("Entrez l'id du Client");
         LocalDate debut = IOUtils.readDate("Entrez la date de debut de la réservation", false);
         LocalDate fin = IOUtils.readDate("Entrez la date de fin de la réservation", false);
-        ReservationService.getInstance().create(new Reservation(1, IdVehicle, IdClient, fin, debut));
+        reservationService.create(new Reservation(1, IdVehicle, IdClient, fin, debut));
     }
     private void listAllClients() throws ServiceException,DaoException{
         IOUtils.print("Voici la liste des Clients");
-        ClientService.getInstance().findAll().forEach(element -> IOUtils.print(element.toString()));
+        clientService.findAll().forEach(element -> IOUtils.print(element.toString()));
     }
     private void listAllReservations() throws ServiceException,DaoException{
         IOUtils.print("Voici la liste des Réservations");
-        ReservationService.getInstance().findAll().forEach(element -> IOUtils.print(element.toString()));
+        reservationService.findAll().forEach(element -> IOUtils.print(element.toString()));
     }
     private void listAllVehicles() throws ServiceException,DaoException{
         IOUtils.print("Voici la liste des Vehicules");
-        VehicleService.getInstance().findAll().forEach(element -> IOUtils.print(element.toString()));
+        vehicleService.findAll().forEach(element -> IOUtils.print(element.toString()));
     }
     private void listReservationByVehicleId() throws ServiceException,DaoException{
         int IdVehicle = IOUtils.readInt("Entrez l'id du Véhicule");
         IOUtils.print("Voici la liste des Réservations associées à la voiture d'id : " + IdVehicle);
-        ReservationService.getInstance().findByVehicleId(IdVehicle).forEach(element -> IOUtils.print(element.toString()));
+        reservationService.findByVehicleId(IdVehicle).forEach(element -> IOUtils.print(element.toString()));
     }
     private void listReservationByClientId() throws ServiceException,DaoException{
         int IdClient = IOUtils.readInt("Entrez l'id du Véhicule");
         IOUtils.print("Voici la liste des Réservations associées à la voiture d'id : " + IdClient);
-        ReservationService.getInstance().findByClientId(IdClient).forEach(element -> IOUtils.print(element.toString()));
+        reservationService.findByClientId(IdClient).forEach(element -> IOUtils.print(element.toString()));
     }
     private void countClients() throws DaoException {
-        IOUtils.print(String.valueOf(ClientService.getInstance().countClients()));
+        IOUtils.print(String.valueOf(clientService.countClients()));
     }
     private void countVehicles() throws DaoException {
-        IOUtils.print(String.valueOf(VehicleDao.getInstance().count()));
+        IOUtils.print(String.valueOf(vehicleService.countVehicles()));
     }
 }

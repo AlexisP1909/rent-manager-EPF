@@ -34,30 +34,14 @@
                                     <th>Action</th>
                                 </tr>
                                 <tr>
-                                    <td>1.</td>
-                                    <td>John</td>
-                                    <td>Doe</td>
-                                    <td>john.doe@epf.fr</td>
+                                <c:forEach items="${users}" var="users">
+                                    <td>${users.id()}</td>
+                                    <td>${users.nom()}</td>
+                                    <td>${users.prenom()}</td>
+                                    <td>${users.email()}</td>
+                                    <!--<td>John Doe</td>-->
                                     <td>
-                                        <a class="btn btn-primary" href="${pageContext.request.contextPath}/users/details?id=1">
-                                        <i class="fa fa-play"></i>
-                                        </a>
-                                        <a class="btn btn-success disabled" href="#">
-                                            <i class="fa fa-edit"></i>
-                                        </a>
-                                        <a class="btn btn-danger disabled" href="#">
-                                            <i class="fa fa-trash"></i>
-                                        </a>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td>2.</td>
-                                    <td>Jane</td>
-                                    <td>Doe</td>
-                                    <td>jane.doe@epf.fr</td>
-                                    <td>
-                                        <a class="btn btn-primary" href="${pageContext.request.contextPath}/users/details?id=2">
+                                        <a class="btn btn-primary" href="${pageContext.request.contextPath}/users/details?id=${users.id()}">
                                             <i class="fa fa-play"></i>
                                         </a>
                                         <a class="btn btn-success disabled" href="#">
@@ -67,7 +51,8 @@
                                             <i class="fa fa-trash"></i>
                                         </a>
                                     </td>
-                                </tr>
+                                    </tr>
+                                </c:forEach>
                             </table>
                         </div>
                         <!-- /.box-body -->

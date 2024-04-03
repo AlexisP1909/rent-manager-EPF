@@ -4,6 +4,11 @@ import com.epf.rentmanager.dao.ClientDao;
 import com.epf.rentmanager.dao.ReservationDao;
 import com.epf.rentmanager.dao.VehicleDao;
 import com.epf.rentmanager.exceptions.DaoException;
+import com.epf.rentmanager.service.ClientService;
+import com.epf.rentmanager.service.ReservationService;
+import com.epf.rentmanager.service.VehicleService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
 import java.io.IOException;
 import java.io.Serial;
@@ -16,24 +21,32 @@ import javax.servlet.http.HttpServletResponse;
 
 @WebServlet("/home")
 public class HomeServlet extends HttpServlet {
+    @Autowired
+    ClientService clientService;
+    @Autowired
+    VehicleService vehicleService;
+    @Autowired
+    ReservationService reservationService;
+    @Serial
+    private static final long serialVersionUID = 1L;
 
-	/**
-	 * 
-	 */
-	@Serial
-	private static final long serialVersionUID = 1L;
+    @Override
+    public void init() throws ServletException {
+        super.init();
+        SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
+    }
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		try{
-			request.setAttribute("nb_utilisateurs", ClientDao.getInstance().count());
-			request.setAttribute("nb_vehicles", VehicleDao.getInstance().count());
-			request.setAttribute("nb_reservations", ReservationDao.getInstance().count());
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        try {
+            request.setAttribute("nb_utilisateurs", clientService.countClients());
+            request.setAttribute("nb_vehicles", vehicleService.countVehicles());
+            request.setAttribute("nb_reservations", reservationService.countR());
 
-		}catch(DaoException e){
-			throw new ServletException(e);
-		}
-		this.getServletContext().getRequestDispatcher("/WEB-INF/views/home.jsp").forward(request, response);
-	}
+        } catch (DaoException e) {
+            throw new ServletException(e);
+        }
+        this.getServletContext().getRequestDispatcher("/WEB-INF/views/home.jsp").forward(request, response);
+    }
 
 }

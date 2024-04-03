@@ -10,21 +10,17 @@ import com.epf.rentmanager.model.Client;
 import com.epf.rentmanager.persistence.ConnectionManager;
 import com.epf.rentmanager.model.Vehicle;
 import com.epf.rentmanager.exceptions.DaoException;
-public class VehicleDao {
+import org.springframework.stereotype.Repository;
 
-	private static VehicleDao instance = null;
+@Repository
+public class VehicleDao {
 	private VehicleDao() {}
-	public static VehicleDao getInstance() {
-		if(instance == null) {
-			instance = new VehicleDao();
-		}
-		return instance;
-	}
 
 	private static final String CREATE_VEHICLE_QUERY = "INSERT INTO Vehicle(constructeur, modele, nb_places) VALUES(?, ?,?);";
 	private static final String DELETE_VEHICLE_QUERY = "DELETE FROM Vehicle WHERE id=?;";
 	private static final String FIND_VEHICLE_QUERY = "SELECT id, constructeur, modele, nb_places FROM Vehicle WHERE id=?;";
 	private static final String FIND_VEHICLES_QUERY = "SELECT id, constructeur, modele, nb_places FROM Vehicle;";
+	private static final String DELETE_RESERVATION_BY_VEHICLE_QUERY = "DELETE FROM Reservation WHERE vehicle_id=?;";
 
 	private static final String COUNT_VEHICLES_QUERY = "SELECT COUNT(id) FROM Vehicle;";
 
@@ -54,9 +50,30 @@ public class VehicleDao {
 	}
 
 	public long delete(Vehicle vehicle) throws DaoException {
+		deleteResaByVehicleId(vehicle);
 		try (Connection connection = ConnectionManager.getConnection();
 			 PreparedStatement stmt =
 					 connection.prepareStatement(DELETE_VEHICLE_QUERY,
+							 Statement.RETURN_GENERATED_KEYS);) {
+			stmt.setInt(1,vehicle.id());
+
+			stmt.execute();
+
+			ResultSet resultSet = stmt.getGeneratedKeys();
+			if (resultSet.next()) {
+				return resultSet.getInt(1);
+			}
+			else{
+				throw new DaoException();
+			}
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+	}
+	private long deleteResaByVehicleId(Vehicle vehicle) throws DaoException {
+		try (Connection connection = ConnectionManager.getConnection();
+			 PreparedStatement stmt =
+					 connection.prepareStatement(DELETE_RESERVATION_BY_VEHICLE_QUERY,
 							 Statement.RETURN_GENERATED_KEYS);) {
 			stmt.setInt(1,vehicle.id());
 

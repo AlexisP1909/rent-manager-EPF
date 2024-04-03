@@ -15,24 +15,20 @@ import java.util.Optional;
 import com.epf.rentmanager.persistence.ConnectionManager;
 import com.epf.rentmanager.model.Client;
 import com.epf.rentmanager.exceptions.DaoException;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class ClientDao {
-	private static ClientDao instance = null;
-
 	private ClientDao() {
-	}
-
-	public static ClientDao getInstance() {
-		if (instance == null) {
-			instance = new ClientDao();
-		}
-		return instance;
 	}
 
 	private static final String CREATE_CLIENT_QUERY = "INSERT INTO Client(nom, prenom, email, naissance) VALUES(?, ?, ?, ?);";
 	private static final String DELETE_CLIENT_QUERY = "DELETE FROM Client WHERE id=?;";
+	private static final String DELETE_RESERVATION_BY_CLIENT_QUERY = "DELETE FROM Reservation WHERE client_id=?;";
+
 	private static final String FIND_CLIENT_QUERY = "SELECT nom, prenom, email, naissance FROM Client WHERE id=?;";
 	private static final String FIND_CLIENTS_QUERY = "SELECT id, nom, prenom, email, naissance FROM Client;";
+	private static final String COUNT_CLIENTS_BY_EMAIL_QUERY = "SELECT COUNt(*) FROM Client WHERE email=?;";
 
 	private static final String COUNT_CLIENTS_QUERY = "SELECT COUNT(id) FROM Client;";
 
@@ -61,6 +57,7 @@ public class ClientDao {
 	}
 
 	public long delete(Client client) throws DaoException {
+		deleteResaByClientId(client);
 		try (Connection connection = ConnectionManager.getConnection();
 			 PreparedStatement stmt =
 					 connection.prepareStatement(DELETE_CLIENT_QUERY,
@@ -73,6 +70,26 @@ public class ClientDao {
 			if (resultSet.next()) {
 				return resultSet.getInt(1);
 			} else {
+				throw new DaoException();
+			}
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+	}
+	private long deleteResaByClientId(Client client) throws DaoException {
+		try (Connection connection = ConnectionManager.getConnection();
+			 PreparedStatement stmt =
+					 connection.prepareStatement(DELETE_RESERVATION_BY_CLIENT_QUERY,
+							 Statement.RETURN_GENERATED_KEYS);) {
+			stmt.setInt(1,client.id());
+
+			stmt.execute();
+
+			ResultSet resultSet = stmt.getGeneratedKeys();
+			if (resultSet.next()) {
+				return resultSet.getInt(1);
+			}
+			else{
 				throw new DaoException();
 			}
 		} catch (SQLException e) {
@@ -102,7 +119,24 @@ public class ClientDao {
 			throw new RuntimeException(e);
 		}
 	}
+	public boolean IsEmailTaken(String email) throws DaoException {
+		try (Connection connection = ConnectionManager.getConnection();
+			 PreparedStatement stmt =
+					 connection.prepareStatement(COUNT_CLIENTS_BY_EMAIL_QUERY);) {
 
+			stmt.setString(1, email);
+
+
+			ResultSet resultSet = stmt.executeQuery();
+			if (resultSet.next()) {
+				return resultSet.getInt(1)>0;
+			} else {
+				throw new DaoException();
+			}
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+	}
 	public List<Client> findAll() throws DaoException {
 		try (Connection connection = ConnectionManager.getConnection();
 			 PreparedStatement stmt =
