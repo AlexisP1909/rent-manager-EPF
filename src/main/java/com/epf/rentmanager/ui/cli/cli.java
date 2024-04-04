@@ -62,6 +62,7 @@ public class cli {
                     case 8 -> listReservationByVehicleId();
                     case 9 -> countClients();
                     case 10 -> countVehicles();
+                    case 11 -> listReservationByVehicleIdSortedByEndDate();
                     case 20 -> finish = false;
                 }
             }catch (DaoException exception){
@@ -116,11 +117,17 @@ public class cli {
         IOUtils.print("Voici la liste des Réservations associées à la voiture d'id : " + IdVehicle);
         reservationService.findByVehicleId(IdVehicle).forEach(element -> IOUtils.print(element.toString()));
     }
+    private void listReservationByVehicleIdSortedByEndDate() throws ServiceException,DaoException{
+        int IdVehicle = IOUtils.readInt("Entrez l'id du Véhicule");
+        IOUtils.print("Voici la liste des Réservations associées à la voiture d'id : " + IdVehicle);
+        reservationService.findByVehicleIdSortedByEndDate(IdVehicle).forEach(element -> IOUtils.print(element.toString()));
+    }
     private void listReservationByClientId() throws ServiceException,DaoException{
         int IdClient = IOUtils.readInt("Entrez l'id du Véhicule");
         IOUtils.print("Voici la liste des Réservations associées à la voiture d'id : " + IdClient);
         reservationService.findByClientId(IdClient).forEach(element -> IOUtils.print(element.toString()));
     }
+
     private void countClients() throws DaoException {
         IOUtils.print(String.valueOf(clientService.countClients()));
     }

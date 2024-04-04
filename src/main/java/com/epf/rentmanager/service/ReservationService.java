@@ -21,7 +21,7 @@ public class ReservationService {
     }
 
     public long create(Reservation reservation) throws ServiceException, DaoException {
-        boolean BookedMoreThan7Days = ChronoUnit.DAYS.between(reservation.debut(), reservation.fin()) > 7;
+        boolean BookedMoreThan7Days = reservation.fin().toEpochDay()-reservation.debut().toEpochDay() > 7;
         if (BookedMoreThan7Days) {
             throw new ServiceException("ERROR: La durée de la réservation ne doit excéder 7jours");
         } else {
@@ -42,7 +42,9 @@ public class ReservationService {
     public List<Reservation> findByVehicleId(long id) throws ServiceException, DaoException {
         return reservationDao.findResaByVehicleId(id);
     }
-
+    public List<Reservation> findByVehicleIdSortedByEndDate(long id) throws ServiceException, DaoException {
+        return reservationDao.findResaByVehicleIdSortedByEndDate(id);
+    }
     public List<Reservation> findAll() throws ServiceException, DaoException {
         return reservationDao.findAll();
     }
@@ -50,4 +52,5 @@ public class ReservationService {
     public int countR() throws DaoException {
         return reservationDao.count();
     }
+
 }
