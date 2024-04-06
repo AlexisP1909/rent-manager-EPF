@@ -32,7 +32,9 @@ public class ReservationCreateServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
             System.out.println(req.getParameter("client") + " " + req.getParameter("car") + " " + req.getParameter("begin") + " " + req.getParameter("end"));
-            ReservationService.getInstance().create(new Reservation(1,Integer.parseInt(req.getParameter("client")),
+            ReservationService.getInstance().create(new Reservation(
+                    1,
+                    Integer.parseInt(req.getParameter("client")),
                     Integer.parseInt(req.getParameter("car")),
                     LocalDate.parse(req.getParameter("begin"), DateTimeFormatter.ofPattern("dd/MM/yyyy")),
                     LocalDate.parse(req.getParameter("end"), DateTimeFormatter.ofPattern("dd/MM/yyyy"))
