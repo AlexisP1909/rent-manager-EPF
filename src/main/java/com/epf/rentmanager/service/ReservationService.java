@@ -1,50 +1,61 @@
 package com.epf.rentmanager.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.epf.rentmanager.dao.ReservationDao;
 import com.epf.rentmanager.exceptions.DaoException;
 import com.epf.rentmanager.model.Reservation;
 import com.epf.rentmanager.exceptions.ServiceException;
+import org.springframework.stereotype.Service;
+
+@Service
 public class ReservationService {
 
     private ReservationDao reservationDao;
-    public static ReservationService instance;
 
-    private ReservationService() {
-        this.reservationDao = ReservationDao.getInstance();
+    private ReservationService(ReservationDao reservationDao) {
+        this.reservationDao = reservationDao;
     }
 
-    public static ReservationService getInstance() {
-        if (instance == null) {
-            instance = new ReservationService();
+    public long create(Reservation reservation) throws ServiceException, DaoException {
+        boolean BookedMoreThan7Days = reservation.fin().toEpochDay()-reservation.debut().toEpochDay() > 7;
+        if (BookedMoreThan7Days) {
+            throw new ServiceException("ERROR: La durée de la réservation ne doit excéder 7jours");
+        } else {
+            try {
+                return reservationDao.create(new Reservation(
+                        reservation.id(),
+                        reservation.client_id(),
+                        reservation.vehicle_id(),
+                        reservation.debut(),
+                        reservation.fin())
+                );
+            } catch (DaoException e) {
+                throw new ServiceException(e.getMessage());
+            }
         }
-
-        return instance;
     }
 
-
-    public long create(Reservation Reservation) throws ServiceException, DaoException {
-            return ReservationDao.getInstance().create(new Reservation(
-                    Reservation.id(),
-                    Reservation.client_id(),
-                    Reservation.vehicle_id(),
-                    Reservation.debut(),
-                    Reservation.fin())
-            );
-        
+    public List<Reservation> findByClientId(long id) throws ServiceException, DaoException {
+        return reservationDao.findResaByClientId(id);
     }
 
-    public List<Reservation> findByClientId(long id) throws ServiceException,DaoException {
-        return  ReservationDao.getInstance().findResaByClientId(id);
+    public List<Reservation> findByVehicleId(long id) throws ServiceException, DaoException {
+        return reservationDao.findResaByVehicleId(id);
+    }
+    public List<Reservation> findByVehicleIdSortedByEndDate(long id) throws ServiceException, DaoException {
+        return reservationDao.findResaByVehicleIdSortedByEndDate(id);
+    }
+    public List<Reservation> findAll() throws ServiceException, DaoException {
+        return reservationDao.findAll();
     }
 
-    public List<Reservation> findByVehicleId(long id) throws ServiceException,DaoException {
-        return  ReservationDao.getInstance().findResaByVehicleId(id);
-    }
-    public List<Reservation> findAll() throws ServiceException,DaoException {
-        return ReservationDao.getInstance().findAll();
+    public int countR() throws ServiceException {
+        try {
+            return reservationDao.count();
+        } catch (DaoException e) {
+            throw new ServiceException(e.getMessage());
+        }
     }
 
 }
