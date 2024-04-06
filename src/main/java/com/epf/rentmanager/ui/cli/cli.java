@@ -1,6 +1,5 @@
 package com.epf.rentmanager.ui.cli;
 import com.epf.rentmanager.configuration.AppConfiguration;
-import com.epf.rentmanager.dao.VehicleDao;
 import com.epf.rentmanager.exceptions.DaoException;
 import com.epf.rentmanager.exceptions.ServiceException;
 import com.epf.rentmanager.model.Reservation;
@@ -9,7 +8,6 @@ import com.epf.rentmanager.service.VehicleService;
 import com.epf.rentmanager.service.ClientService;
 import com.epf.rentmanager.model.Client;
 import com.epf.rentmanager.model.Vehicle;
-import com.epf.rentmanager.model.Reservation;
 import com.epf.rentmanager.service.ReservationService;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -48,6 +46,11 @@ public class cli {
             IOUtils.print("Taper 6 pour Lister les Réservations existantes");
             IOUtils.print("Taper 7 pour Lister les Réservations existantes liées à l'id d'un Client");
             IOUtils.print("Taper 8 pour Lister les Réservations existantes liées à l'id d'un Client");
+            IOUtils.print("Taper 9 pour Compter le nombre de Clients");
+            IOUtils.print("Taper 10 pour Compter le nombre de Véhicules");
+            IOUtils.print("Taper 11 pour Lister les Réservations existantes liées à l'id d'un Véhicule et triées par date de fin");
+            IOUtils.print("Taper 12 pour Supprimer un Client");
+            IOUtils.print("Taper 13 pour Supprimer un Véhicule");
             IOUtils.print("Taper 20 pour Quitter");
             int choix = IOUtils.readInt("");
             try {
@@ -63,13 +66,12 @@ public class cli {
                     case 9 -> countClients();
                     case 10 -> countVehicles();
                     case 11 -> listReservationByVehicleIdSortedByEndDate();
+                    case 12 -> deleteClient();
+                    case 13 -> deleteVehicle();
                     case 20 -> finish = false;
                 }
-            }catch (DaoException exception){
-                System.out.println("Il y a eu un problème avec la Base de Données");
-            }
-            catch (ServiceException exception){
-                System.out.println("Il y a eu un problème avec l'entrée des données");
+            }catch (DaoException | ServiceException exception) {
+                throw new RuntimeException(exception);
             }
         }
     }catch (InterruptedException e){
@@ -128,10 +130,18 @@ public class cli {
         reservationService.findByClientId(IdClient).forEach(element -> IOUtils.print(element.toString()));
     }
 
-    private void countClients() throws DaoException {
+    private void countClients() throws DaoException,ServiceException{
         IOUtils.print(String.valueOf(clientService.countClients()));
     }
     private void countVehicles() throws DaoException {
         IOUtils.print(String.valueOf(vehicleService.countVehicles()));
+    }
+    private void deleteClient() throws ServiceException{
+        int IdClient = IOUtils.readInt("Entrez l'id du Client");
+        clientService.deleteClient(IdClient);
+    }
+    private void deleteVehicle() throws ServiceException{
+        int IdVehicle = IOUtils.readInt("Entrez l'id du Véhicule");
+        vehicleService.deleteVehicle(IdVehicle);
     }
 }

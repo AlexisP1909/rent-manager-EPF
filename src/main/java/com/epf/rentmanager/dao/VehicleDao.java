@@ -1,12 +1,9 @@
 package com.epf.rentmanager.dao;
 
 import java.sql.*;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
-import com.epf.rentmanager.model.Client;
 import com.epf.rentmanager.persistence.ConnectionManager;
 import com.epf.rentmanager.model.Vehicle;
 import com.epf.rentmanager.exceptions.DaoException;
@@ -49,13 +46,13 @@ public class VehicleDao {
 		}
 	}
 
-	public long delete(Vehicle vehicle) throws DaoException {
-		deleteResaByVehicleId(vehicle);
+	public long delete(int id) throws DaoException {
+		deleteResaByVehicleId(id);
 		try (Connection connection = ConnectionManager.getConnection();
 			 PreparedStatement stmt =
 					 connection.prepareStatement(DELETE_VEHICLE_QUERY,
 							 Statement.RETURN_GENERATED_KEYS);) {
-			stmt.setInt(1,vehicle.id());
+			stmt.setLong(1,id);
 
 			stmt.execute();
 
@@ -70,22 +67,14 @@ public class VehicleDao {
 			throw new RuntimeException(e);
 		}
 	}
-	private long deleteResaByVehicleId(Vehicle vehicle) throws DaoException {
+	private void deleteResaByVehicleId(int id) throws DaoException {
 		try (Connection connection = ConnectionManager.getConnection();
 			 PreparedStatement stmt =
 					 connection.prepareStatement(DELETE_RESERVATION_BY_VEHICLE_QUERY,
 							 Statement.RETURN_GENERATED_KEYS);) {
-			stmt.setInt(1,vehicle.id());
+			stmt.setLong(1,id);
 
 			stmt.execute();
-
-			ResultSet resultSet = stmt.getGeneratedKeys();
-			if (resultSet.next()) {
-				return resultSet.getInt(1);
-			}
-			else{
-				throw new DaoException();
-			}
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}

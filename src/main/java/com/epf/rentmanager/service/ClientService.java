@@ -1,9 +1,7 @@
 package com.epf.rentmanager.service;
 
-import java.sql.*;
 import java.time.LocalDate;
 import java.time.Period;
-import java.util.ArrayList;
 import java.util.List;
 
 import com.epf.rentmanager.dao.ClientDao;
@@ -25,17 +23,15 @@ public class ClientService {
     }
 
     public long create(Client client) throws ServiceException, DaoException {
-        boolean clientIsOver18 = Period.between(client.naissance(), LocalDate.now()).getYears() < 18;
         if (client.nom().isEmpty() || client.prenom().isEmpty()) {
             throw new ServiceException("Error: les noms et prenoms sont vides");
-        } else if (clientIsOver18) {
+        } else if (isNotLegal(client.naissance())) {
             throw new ServiceException("Error: Le client n'est pas majeur");
         } else if (clientDao.IsEmailTaken(client.email())) {
             throw new ServiceException("Email déjà pris");
-        }else if(client.nom().length()<3 || client.prenom().length()<3){
+        } else if (client.nom().length() < 3 || client.prenom().length() < 3) {
             throw new ServiceException("Le nom et le prenom doivent faire 3 caractères minimum");
-        }
-        else {
+        } else {
 
             return clientDao.create(new Client(
                     client.id(),
@@ -47,12 +43,19 @@ public class ClientService {
         }
     }
 
-    public Client findById(long id) throws ServiceException, DaoException {
+    public static boolean isNotLegal(LocalDate naissance) {
+        return Period.between(naissance, LocalDate.now()).getYears() < 18;
+    }
+
+    public Client findById(long id) throws ServiceException {
+        try{
         Client client = clientDao.findById(id);
         if (client.nom().isEmpty() || client.prenom().isEmpty()) {
             throw new ServiceException();
         } else {
             return client;
+        }} catch (DaoException e) {
+            throw new ServiceException(e.getMessage());
         }
     }
 
@@ -60,7 +63,18 @@ public class ClientService {
         return clientDao.findAll();
     }
 
-    public int countClients() throws DaoException {
-        return clientDao.count();
+    public int countClients() throws ServiceException {
+        try {
+            return clientDao.count();
+        } catch (DaoException e) {
+            throw new ServiceException(e.getMessage());
+        }
+    }
+    public void deleteClient(int id) throws ServiceException {
+        try {
+            clientDao.delete(id);
+        } catch (DaoException e) {
+            throw new ServiceException();
+        }
     }
 }

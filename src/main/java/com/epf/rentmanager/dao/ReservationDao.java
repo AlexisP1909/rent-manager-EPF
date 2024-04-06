@@ -10,8 +10,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.epf.rentmanager.model.Client;
-import com.epf.rentmanager.model.Vehicle;
 import com.epf.rentmanager.persistence.ConnectionManager;
 import com.epf.rentmanager.model.Reservation;
 import com.epf.rentmanager.exceptions.DaoException;
@@ -34,57 +32,43 @@ public class ReservationDao {
 
     public long create(Reservation reservation) throws DaoException {
         List<Reservation> listeResa = findResaByVehicleIdSortedByEndDate(reservation.vehicle_id());
-        System.out.println("ListeResa = " + listeResa);
         boolean isAvailable = true;
 
         int days = 0;
 
         if (!listeResa.isEmpty()) {
-            LocalDate finChaine = listeResa.get(0).fin();
-            days = (int) ((int) finChaine.toEpochDay() - listeResa.get(0).debut().toEpochDay());
-            System.out.println("finChaine = " + finChaine);
-            for (int i = 0; i < listeResa.size(); i++ ){
+            days = (int) ((int) listeResa.get(0).fin().toEpochDay() - listeResa.get(0).debut().toEpochDay());
+            for (int i = 0; i < listeResa.size(); i++) {
                 if (!(listeResa.get(i)
                         .debut().isAfter(reservation.fin()) || listeResa.get(i)
                         .fin().isBefore(reservation.debut()))) {
                     isAvailable = false;
                 }
-                System.out.println("resaDebut = " + listeResa.get(i)
-                        .debut());
-                System.out.println(finChaine.plusDays(1));
                 //Voiture pas plus de 30 jours
                 if (listeResa.get(i)
                         != listeResa.get(0)) {
                     if (listeResa.get(i)
-                            .debut().isEqual(finChaine.plusDays(1))) {
+                            .debut().isEqual(listeResa.get(i - 1)
+                                    .fin().plusDays(1))) {
                         days += (int) ((int) listeResa.get(i)
                                 .fin().toEpochDay() - listeResa.get(i)
                                 .debut().toEpochDay());
-                        System.out.println("days = " + days);
                         if (days > 22) {
-                            System.out.println(">22");
-                            System.out.println("reservation.debut() = " + reservation.debut());
-                            System.out.println("finchaine = " + finChaine.plusDays(1));
-                            finChaine = listeResa.get(i)
-                                    .fin();
-                            if (reservation.debut().isEqual(finChaine.plusDays(1))) {
+                            if (reservation.debut().isEqual(listeResa.get(i)
+                                    .fin().plusDays(1))) {
                                 days += (int) ((int) reservation.fin().toEpochDay() - reservation.debut().toEpochDay());
-                                System.out.println(" Oh my days = " + days);
                                 break;
                             }
                         }
                     } else {
                         days = 0;
-                        System.out.println("days = " + days);
                     }
                 }
-                finChaine = listeResa.get(i)
-                        .fin();
             }
         }
-        if(reservation.debut().isAfter(reservation.fin()) ||reservation.fin().isBefore(reservation.debut())){
+        if (reservation.debut().isAfter(reservation.fin()) || reservation.fin().isBefore(reservation.debut())) {
             throw new DaoException("ERROR: La date de début doit être avant la date de fin et la date de fin doit être après la date de début.");
-        }else if (days > 30) {
+        } else if (days > 30) {
             throw new DaoException("ERROR: Le véhicule ne peut pas être réservé plus de 30 jours consécutifs.");
         } else if (!isAvailable) {
             throw new DaoException("ERROR: Le véhicule est déjà réservé pour cette période.");

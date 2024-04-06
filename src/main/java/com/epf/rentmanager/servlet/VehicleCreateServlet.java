@@ -1,7 +1,5 @@
 package com.epf.rentmanager.servlet;
 
-import com.epf.rentmanager.exceptions.DaoException;
-import com.epf.rentmanager.exceptions.ServiceException;
 import com.epf.rentmanager.model.Vehicle;
 import com.epf.rentmanager.service.VehicleService;
 import org.springframework.beans.factory.annotation.Autowired;

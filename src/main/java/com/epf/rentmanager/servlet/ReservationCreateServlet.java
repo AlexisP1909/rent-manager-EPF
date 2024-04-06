@@ -1,14 +1,11 @@
 package com.epf.rentmanager.servlet;
 
-import com.epf.rentmanager.dao.ClientDao;
-import com.epf.rentmanager.dao.VehicleDao;
 import com.epf.rentmanager.exceptions.DaoException;
 import com.epf.rentmanager.exceptions.ServiceException;
 import com.epf.rentmanager.model.Reservation;
 import com.epf.rentmanager.service.ClientService;
 import com.epf.rentmanager.service.ReservationService;
 import com.epf.rentmanager.service.VehicleService;
-import com.epf.rentmanager.utils.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 

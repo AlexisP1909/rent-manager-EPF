@@ -4,8 +4,6 @@ import java.util.List;
 
 import com.epf.rentmanager.exceptions.DaoException;
 import com.epf.rentmanager.model.Vehicle;
-import com.epf.rentmanager.model.Vehicle;
-import com.epf.rentmanager.dao.ClientDao;
 import com.epf.rentmanager.dao.VehicleDao;
 import com.epf.rentmanager.exceptions.ServiceException;
 import org.springframework.stereotype.Service;
@@ -41,5 +39,13 @@ public class VehicleService {
 	}
 	public int countVehicles() throws DaoException {
 		return vehicleDao.count();
+	}
+	public void deleteVehicle(int id) throws ServiceException {
+		try {
+			vehicleDao.delete(id);
+		} catch (DaoException e) {
+			throw new ServiceException();
+		}
+
 	}
 }

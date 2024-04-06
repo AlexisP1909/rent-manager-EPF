@@ -7,10 +7,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import com.epf.rentmanager.persistence.ConnectionManager;
 import com.epf.rentmanager.model.Client;
@@ -56,13 +54,13 @@ public class ClientDao {
 		}
 	}
 
-	public long delete(Client client) throws DaoException {
-		deleteResaByClientId(client);
+	public long delete(int id) throws DaoException {
+		deleteResaByClientId(id);
 		try (Connection connection = ConnectionManager.getConnection();
 			 PreparedStatement stmt =
 					 connection.prepareStatement(DELETE_CLIENT_QUERY,
 							 Statement.RETURN_GENERATED_KEYS);) {
-			stmt.setInt(1, client.id());
+			stmt.setLong(1, id);
 
 			stmt.execute();
 
@@ -70,28 +68,20 @@ public class ClientDao {
 			if (resultSet.next()) {
 				return resultSet.getInt(1);
 			} else {
-				throw new DaoException();
+				throw new DaoException("Erreur lors de la suppression du client");
 			}
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}
 	}
-	private long deleteResaByClientId(Client client) throws DaoException {
+	private void deleteResaByClientId(int id) throws DaoException {
 		try (Connection connection = ConnectionManager.getConnection();
 			 PreparedStatement stmt =
 					 connection.prepareStatement(DELETE_RESERVATION_BY_CLIENT_QUERY,
 							 Statement.RETURN_GENERATED_KEYS);) {
-			stmt.setInt(1,client.id());
+			stmt.setLong(1,id);
 
 			stmt.execute();
-
-			ResultSet resultSet = stmt.getGeneratedKeys();
-			if (resultSet.next()) {
-				return resultSet.getInt(1);
-			}
-			else{
-				throw new DaoException();
-			}
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}

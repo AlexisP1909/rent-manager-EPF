@@ -1,8 +1,5 @@
 package com.epf.rentmanager.service;
 
-import java.time.Period;
-import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
 import java.util.List;
 
 import com.epf.rentmanager.dao.ReservationDao;
@@ -25,13 +22,17 @@ public class ReservationService {
         if (BookedMoreThan7Days) {
             throw new ServiceException("ERROR: La durée de la réservation ne doit excéder 7jours");
         } else {
-            return reservationDao.create(new Reservation(
-                    reservation.id(),
-                    reservation.client_id(),
-                    reservation.vehicle_id(),
-                    reservation.debut(),
-                    reservation.fin())
-            );
+            try {
+                return reservationDao.create(new Reservation(
+                        reservation.id(),
+                        reservation.client_id(),
+                        reservation.vehicle_id(),
+                        reservation.debut(),
+                        reservation.fin())
+                );
+            } catch (DaoException e) {
+                throw new ServiceException(e.getMessage());
+            }
         }
     }
 
@@ -49,8 +50,12 @@ public class ReservationService {
         return reservationDao.findAll();
     }
 
-    public int countR() throws DaoException {
-        return reservationDao.count();
+    public int countR() throws ServiceException {
+        try {
+            return reservationDao.count();
+        } catch (DaoException e) {
+            throw new ServiceException(e.getMessage());
+        }
     }
 
 }

@@ -1,1 +1,4 @@
+com\epf\rentmanager\service\TestServiceReservation.class
+com\epf\rentmanager\service\TestServiceClient.class
 epf\AppTest.class
+com\epf\rentmanager\service\TestServiceVehicle.class

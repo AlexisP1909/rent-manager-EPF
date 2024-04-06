@@ -47,6 +47,12 @@
                                 <div class="box-body no-padding">
                                     <table class="table table-striped">
                                         <tr>
+                                            <th style="width: 10px">#</th>
+                                            <th>voiture</th>
+                                            <th style=>debut</th>
+                                            <th style=>fin</th>
+                                        </tr>
+                                        <tr>
                                             <c:forEach items="${reservations}" var="reservation">
                                         <tr>
                                             <td>${reservation[0].id()}</td>

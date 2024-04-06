@@ -1,9 +1,7 @@
 package com.epf.rentmanager.servlet;
 
-import com.epf.rentmanager.dao.ClientDao;
-import com.epf.rentmanager.dao.ReservationDao;
-import com.epf.rentmanager.dao.VehicleDao;
 import com.epf.rentmanager.exceptions.DaoException;
+import com.epf.rentmanager.exceptions.ServiceException;
 import com.epf.rentmanager.service.ClientService;
 import com.epf.rentmanager.service.ReservationService;
 import com.epf.rentmanager.service.VehicleService;
@@ -43,7 +41,7 @@ public class HomeServlet extends HttpServlet {
             request.setAttribute("nb_vehicles", vehicleService.countVehicles());
             request.setAttribute("nb_reservations", reservationService.countR());
 
-        } catch (DaoException e) {
+        } catch (DaoException | ServiceException e) {
             throw new ServletException(e);
         }
         this.getServletContext().getRequestDispatcher("/WEB-INF/views/home.jsp").forward(request, response);
